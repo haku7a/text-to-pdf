@@ -6,7 +6,7 @@ def check_clipboard():
     content = pyperclip.paste()
 
     if not content:
-        content
+        return
 
     html_template = f"""
     <!DOCTYPE html>
