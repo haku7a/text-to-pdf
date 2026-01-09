@@ -1,5 +1,6 @@
 import pyperclip
 from weasyprint import HTML
+import html
 
 
 def check_clipboard():
@@ -8,18 +9,27 @@ def check_clipboard():
     if not content:
         return
 
+    safe_content = html.escape(content)
+
     html_template = f"""
     <!DOCTYPE html>
     <html lang="ru">
     <head>
         <meta charset="UTF-8">
         <style>
-            body {{ font-family: sans-serif; padding: 20px; line-height: 1.6; }}
-            .content {{ white-space: pre-wrap; }}
+            @page {{ margin: 1cm; }}
+            body {{ 
+                font-family: 'Courier New', monospace; /* Моноширинный шрифт для кода */
+                background-color: #f5f5f5;
+                font-size: 10pt;
+            }}
+            .content-block {{ white-space: pre-wrap; 
+                word-wrap: break-word;
+                color: #222; }}
         </style>
     </head>
     <body>
-        <div class="content">{content}</div>
+        <div class="content">{safe_content}</div>
     </body>
     </html>
 """
